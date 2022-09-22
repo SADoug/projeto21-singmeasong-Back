@@ -3,10 +3,6 @@ import supertest from 'supertest';
 import { prisma } from "../src/database"
 import { faker } from "@faker-js/faker"
 
-// beforeAll(async () => {
-//     await prisma.$executeRaw`TRUNCATE TABLE recommendations`;
-// });
-
 describe('Test the recommendations post  ', () => {
 
     it("given a recommendations with duplicate name it should return 409", async () => {
@@ -26,23 +22,22 @@ describe('Test the recommendations post  ', () => {
     });
 
     it("given a recommendations upvote it should return 200", async () => {
-        const upvote = await supertest(app).post("/recommendations/10/upvote")
+        const upvote = await supertest(app).post("/recommendations/11/upvote")
         expect(upvote.status).toEqual(200);
     });
 
-    // it("given a recommendations downvote name it should return 200", async () => {
-    //     const downvote = await supertest(app).post("/recommendations/10/downvote")
-    //     expect(downvote.status).toEqual(200);
-    // });
+    it("given a recommendations downvote name it should return 200", async () => {
+        const downvote = await supertest(app).post("/recommendations/10/downvote")
+        expect(downvote.status).toEqual(200);
+    });
 
 });
 
-describe('Test the recommendations get  ', () => {
+describe('Test the recommendations get', () => {
 
     it("get all recommendations it should return 200", async () => {
 
         const recommendationsGetAll = await supertest(app).get("/recommendations")
-        console.log(recommendationsGetAll.body)
         expect(recommendationsGetAll.status).toEqual(200);
 
     });
